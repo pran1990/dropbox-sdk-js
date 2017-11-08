@@ -52,10 +52,10 @@ declare module DropboxTypes {
     public filePropertiesPropertiesOverwrite(arg: file_properties.OverwritePropertyGroupArg): Promise<void>;
 
     /**
-     * Remove the specified property group from the file. To remove specific
-     * property field key value pairs, see propertiesUpdate(). To update a
-     * template, see templatesUpdateForUser() or templatesUpdateForTeam().
-     * Templates can't be removed once created.
+     * Permanently removes the specified property group from the file. To remove
+     * specific property field key value pairs, see propertiesUpdate(). To
+     * update a template, see templatesUpdateForUser() or
+     * templatesUpdateForTeam(). Templates can't be removed once created.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.RemovePropertiesError>.
@@ -73,6 +73,16 @@ declare module DropboxTypes {
     public filePropertiesPropertiesSearch(arg: file_properties.PropertiesSearchArg): Promise<file_properties.PropertiesSearchResult>;
 
     /**
+     * Once a cursor has been retrieved from propertiesSearch(), use this to
+     * paginate through all search results.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.PropertiesSearchContinueError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesPropertiesSearchContinue(arg: file_properties.PropertiesSearchContinueArg): Promise<file_properties.PropertiesSearchResult>;
+
+    /**
      * Add, update or remove properties associated with the supplied file and
      * templates. This endpoint should be used instead of propertiesOverwrite()
      * when property groups are being updated via a "delta" instead of via a
@@ -88,7 +98,8 @@ declare module DropboxTypes {
 
     /**
      * Add a template associated with a team. See propertiesAdd() to add
-     * properties to a file or folder.
+     * properties to a file or folder. Note: this endpoint will create
+     * team-owned templates.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.ModifyTemplateError>.
@@ -146,6 +157,28 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public filePropertiesTemplatesListForUser(arg: void): Promise<file_properties.ListTemplateResult>;
+
+    /**
+     * Permanently removes the specified template created from
+     * templatesAddForUser(). All properties associated with the template will
+     * also be removed. This action cannot be undone.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.TemplateError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesTemplatesRemoveForTeam(arg: file_properties.RemoveTemplateArg): Promise<void>;
+
+    /**
+     * Permanently removes the specified template created from
+     * templatesAddForUser(). All properties associated with the template will
+     * also be removed. This action cannot be undone.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.TemplateError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesTemplatesRemoveForUser(arg: file_properties.RemoveTemplateArg): Promise<void>;
 
     /**
      * Update a template associated with a team. This route can update the
@@ -215,6 +248,7 @@ declare module DropboxTypes {
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.AlphaGetMetadataError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public filesAlphaGetMetadata(arg: files.AlphaGetMetadataArg): Promise<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>;
@@ -227,6 +261,7 @@ declare module DropboxTypes {
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadErrorWithProperties>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public filesAlphaUpload(arg: files.CommitInfoWithProperties): Promise<files.FileMetadata>;

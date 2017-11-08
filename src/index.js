@@ -1,1 +1,4 @@
-module.exports = require('./dropbox').Dropbox;
+module.exports = {
+    Dropbox: require('./dropbox').Dropbox,
+    DropboxTeam: require('./team/dropbox-team').DropboxTeam
+}

@@ -8,6 +8,7 @@ const env = process.env.NODE_ENV;
 const config = {
   format: 'umd',
   sourceMap: (env !== 'production'),
+  external: ['isomorphic-fetch'],
   plugins: [
     // nodeResolve({
     //   main: true,
